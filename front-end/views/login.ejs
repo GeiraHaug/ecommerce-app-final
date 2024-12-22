@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/stylesheets/login.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="prompt">
+      <h3 class="text-center">Sign in</h3>
+      <% if (error) { %>
+        <div class="messages">
+          <p><%= error %></p>
+        </div>
+      <% } %>
+      <form action="/login" method="POST">
+        <section>
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+        </section>
+        <section>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </section>
+        <button type="submit" class="btn btn-danger">Sign in</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

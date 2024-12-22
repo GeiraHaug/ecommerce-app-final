@@ -1,8 +1,67 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
 a {
   color: #00B7FF;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+body {
+  padding: 50px;
+  font: 14px Helvetica;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+form {
+  margin: 20px 0;
+}
+
+button {
+  padding: 6px 11px;
+  background-color: #218cff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #126ac8;
+}
+
+/* Ensure uniform alignment and spacing */
+.form-label, .form-control, .form-select {
+  display: flex;
+  align-items: center;
+  height: 40px; /* Matches Bootstrap's default input height */
+  margin: 0; /* Removes inconsistent margins */
+}
+
+.form-label {
+  justify-content: flex-start; /* Align labels to the start */
+}
+
+.form-control, .form-select {
+  flex-grow: 1; /* Ensures the inputs and dropdowns stretch to fill space equally */
+}
+
+/* Button group alignment */
+button#searchButton, button#clearButton {
+  height: 39px; /* Match the input height */
+  margin-top: 35px;
+}
+

@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('login', { error: null });
+});
+
+router.get('/products', (req, res) => {
+  if (!req.session.token) {
+    return res.redirect('/login');
+  }
+  res.render('products', { title: 'Products' });
 });
 
 module.exports = router;

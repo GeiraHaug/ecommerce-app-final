@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders - Noroff EP e-commerce</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+  <%- include('./partials/navbar') %>
+
+  <div class="container mt-4">
+    <h1 class="text-center">Orders</h1>
+    <p class="text-center text-muted">Manage status of all orders</p>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Order Number</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>User Id</th>
+            <th>Order Status</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (orders.length === 0) { %>
+            <tr>
+              <td colspan="7" class="text-center">No orders available.</td>
+            </tr>
+          <% } else { %>
+            <% orders.forEach(order => { %>
+              <tr>
+                <td><%= order.Id %></td>
+                <td><%= order.OrderNumber %></td>
+                <td><%= new Date(order.createdAt).toLocaleString() %></td>
+                <td><%= new Date(order.updatedAt).toLocaleString() %></td>
+                <td><%= order.UserId %></td>
+                <td><%= order.Status %></td>
+                <td>
+                  <button class="btn btn-warning btn-sm" onclick="editOrderStatus('<%= order.Id %>', '<%= order.Status %>')">Edit</button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

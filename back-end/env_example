@@ -1,0 +1,7 @@
+HOST="localhost"
+ADMIN_USERNAME="your_admin_username"
+ADMIN_PASSWORD="your_admin_password"
+DATABASE_NAME="your_database_name"
+DIALECT="mysql"
+PORT="3001"
+TOKEN_SECRET="your_token_secret"

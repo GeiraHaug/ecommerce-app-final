@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+  <%- include('./partials/navbar') %>
+
+  <div class="container mt-4">
+    <h1 class="text-center">Products</h1>
+    <p class="text-center">Manage products</p>
+    <div class="row align-items-center mt-4 gx-3">
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="productSearch" class="form-label">Name</label>
+          <input type="text" id="productSearch" class="form-control" placeholder="Product name">
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="categoryDropdown" class="form-label">Category</label>
+          <select id="categoryDropdown" class="form-select">
+            <option value="none">None</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="brandDropdown" class="form-label">Brand</label>
+          <select id="brandDropdown" class="form-select">
+            <option value="none">None</option>
+
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-3 text-end">
+        <button class="btn btn-primary me-2" id="searchButton">
+          <i class="bi bi-search"></i> Search
+        </button>
+        <button class="btn btn-warning" id="clearButton">
+          <i class="bi bi-arrow-clockwise"></i> Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+<div class="row mt-5">
+  <div class="col text-end">
+    <button class="btn btn-primary" id="addProductButton" data-bs-toggle="modal" data-bs-target="#addProductModal">
+      <i class="bi bi-plus"></i> Add Product
+    </button>
+  </div>
+</div>
+
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="productName" required>
+          </div>
+          <div class="mb-3">
+            <label for="productDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="productDescription" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Price</label>
+            <input type="number" step="0.01" class="form-control" id="productPrice" required>
+          </div>
+          <div class="mb-3">
+            <label for="productQuantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="productQuantity" required>
+          </div>
+          <div class="mb-3">
+            <label for="productImageUrl" class="form-label">Image URL</label>
+            <input type="url" class="form-control" id="productImageUrl" required>
+          </div>
+          <div class="mb-3">
+            <label for="productBrandId" class="form-label">Brand ID</label>
+            <input type="number" class="form-control" id="productBrandId" required>
+          </div>
+          <div class="mb-3">
+            <label for="productCategoryId" class="form-label">Category ID</label>
+            <input type="number" class="form-control" id="productCategoryId" required>
+          </div>
+          <div class="mb-3">
+            <label for="productDateAdded" class="form-label">Date Added</label>
+            <input type="datetime-local" class="form-control" id="productDateAdded" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <div class="table-responsive mt-4">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Image URL</th>
+          <th>isDeleted</th>
+          <th>date_added</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody">
+        <% if (products.length === 0) { %>
+          <tr>
+            <td colspan="3" class="text-center">No products available.</td>
+          </tr>
+        <% } else { %>
+          <% products.forEach(product => { %>
+            <tr>
+              <td><%= product.id %></td>
+              <td><%= product.name %></td>
+              <td><%= product.description %></td>
+              <td>$<%= product.price %></td>
+              <td><%= product.quantity %></td>
+              <td><%= product.brand %></td>
+              <td><%= product.category %></td>
+              <td><%= product.imageUrl %></td>
+              <td><%= product.isDeleted ? 'True' : 'False' %></td>
+              <td><%= product.date_added || '' %></td>
+              <td>
+                <button class="btn btn-warning btn-sm">Edit</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </td>
+            </tr>
+          <% }); %>
+  
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const addProductForm = document.getElementById("addProductForm");
+
+  addProductForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const productData = {
+      name: document.getElementById("productName").value,
+      description: document.getElementById("productDescription").value,
+      price: parseFloat(document.getElementById("productPrice").value),
+      quantity: parseInt(document.getElementById("productQuantity").value),
+      imageUrl: document.getElementById("productImageUrl").value,
+      brandId: parseInt(document.getElementById("productBrandId").value),
+      categoryId: parseInt(document.getElementById("productCategoryId").value),
+      date_added: new Date(document.getElementById("productDateAdded").value).toISOString(),
+    };
+
+    try {
+      const tokenResponse = await fetch("/products/get-token");
+      const tokenData = await tokenResponse.json();
+
+      const response = await fetch("http://localhost:3001/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenData.token}`,
+        },
+        body: JSON.stringify(productData),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        alert("Product added successfully!");
+        window.location.reload();
+      } else {
+        alert("Failed to add product: " + data.data.result || "Unknown error.");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      alert("An error occurred while adding the product.");
+    }
+  });
+</script>
+
+</body>
+</html>

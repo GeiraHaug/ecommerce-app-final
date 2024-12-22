@@ -1,0 +1,29 @@
+.prompt {
+    max-width: 300px;
+    margin: 80px auto;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #4f5289;
+  }
+  
+  button {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  
+  h3 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 300;
+    text-align: center;
+    color: #2f3dce;
+  }
+  
+  .messages p {
+    font-size: 15px;
+    font-weight: 600;
+    color: #d83f45;
+  }

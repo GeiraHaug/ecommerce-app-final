@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memberships - Noroff EP e-commerce</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+  <%- include('./partials/navbar') %>
+
+  <div class="container mt-4">
+    <h1 class="text-center">Memberships</h1>
+    <p class="text-center text-muted">Manage memberships for users</p>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" id="addMembershipButton">Add Membership</button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>From Total Purchases</th>
+            <th>To Total Purchases</th>
+            <th>Discount</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (memberships.length === 0) { %>
+            <tr>
+              <td colspan="6" class="text-center">No memberships available.</td>
+            </tr>
+          <% } else { %>
+            <% memberships.forEach(membership => { %>
+              <tr>
+                <td><%= membership.Id %></td>
+                <td><%= membership.Name %></td>
+                <td><%= membership.FromTotalPurchases %></td>
+                <td><%= membership.ToTotalPurchases %></td>
+                <td><%= membership.Discount %>%</td>
+                <td>
+                  <button class="btn btn-warning btn-sm" onclick="">Edit</button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function editMembership(membership) {
+      const newName = prompt("Edit Membership Name:", membership.Name);
+      const newFrom = prompt("Edit From Total Purchases:", membership.FromTotalPurchases);
+      const newTo = prompt("Edit To Total Purchases:", membership.ToTotalPurchases);
+      const newDiscount = prompt("Edit Discount:", membership.Discount);
+
+      if (newName && newFrom && newTo && newDiscount) {
+        fetch(`/memberships/${membership.Id}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer <%= token %>`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: newName,
+            fromTotalPurchases: newFrom,
+            toTotalPurchases: newTo,
+            discount: newDiscount,
+          }),
+        })
+          .then(response => {
+            if (response.ok) {
+              alert("Membership updated successfully!");
+              location.reload();
+            } else {
+              alert("Failed to update membership.");
+            }
+          })
+          .catch(error => {
+            console.error("Error updating membership:", error);
+            alert("An error occurred.");
+          });
+      }
+    }
+
+    document.getElementById("addMembershipButton").addEventListener("click", () => {
+      const name = prompt("Enter Membership Name:");
+      const from = prompt("Enter From Total Purchases:");
+      const to = prompt("Enter To Total Purchases:");
+      const discount = prompt("Enter Discount:");
+
+      if (name && from && to && discount) {
+        fetch("/memberships", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer <%= token %>`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            fromTotalPurchases: from,
+            toTotalPurchases: to,
+            discount: discount,
+          }),
+        })
+          .then(response => {
+            if (response.ok) {
+              alert("Membership added successfully!");
+              location.reload();
+            } else {
+              alert("Failed to add membership.");
+            }
+          })
+          .catch(error => {
+            console.error("Error adding membership:", error);
+            alert("An error occurred.");
+          });
+      }
+    });
+  </script>
+</body>
+</html>

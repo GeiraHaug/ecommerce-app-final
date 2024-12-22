@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories - Noroff EP e-commerce</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+  <%- include('./partials/navbar') %>
+
+  <div class="container mt-4">
+    <h1 class="text-center">Categories</h1>
+    <p class="text-center text-muted">Manage categories for products</p>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary">Add Category</button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (categories.length === 0) { %>
+            <tr>
+              <td colspan="3" class="text-center">No categories available.</td>
+            </tr>
+          <% } else { %>
+            <% categories.forEach(category => { %>
+              <tr>
+                <td><%= category.Id %></td>
+                <td><%= category.Name %></td>
+                <td>
+                  <button class="btn btn-warning btn-sm">Edit</button>
+                  <button class="btn btn-danger btn-sm">Delete</button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

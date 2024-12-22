@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 var isAdmin = require("./isAdmin");
 
@@ -6,7 +6,7 @@ var BACKEND_API_URL = "http://localhost:3001";
 
 router.get("/", isAdmin, async (req, res) => {
   try {
-    const response = await fetch(`${BACKEND_API_URL}/users`, {
+    const response = await fetch(`${BACKEND_API_URL}/roles`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${req.session.token}`,
@@ -15,17 +15,17 @@ router.get("/", isAdmin, async (req, res) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch users");
+      throw new Error("Failed to fetch roles");
     }
 
-    const usersData = await response.json();
-    const users = usersData.data.users;
-    res.render("users", { users });
+    const rolesData = await response.json();
+    const roles = rolesData.data.roles;
+    res.render("roles", { roles });
   } catch (error) {
-    console.error("Error fetching users:", error.message);
-    res.render("users", {
-      users: [],
-      error: "Failed to load users.",
+    console.error("Error fetching roles:", error.message);
+    res.render("roles", {
+      roles: [],
+      error: "Failed to load roles.",
     });
   }
 });
