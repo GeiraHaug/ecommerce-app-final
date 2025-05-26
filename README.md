@@ -41,11 +41,13 @@ Dette er et fullstack-prosjekt utviklet som del av avsluttende eksamen ved Norof
 
 
 2.  Installer dependencies:
+    ```
     cd back-end
     npm install
 
     cd ../front-end
     npm install
+    ```
 
 3.  Sett opp .env-filer i både /back-end og /front-end:
     ```
